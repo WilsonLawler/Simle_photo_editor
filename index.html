@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+     
+    <style>
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+        h1 {
+            color: #ffc600;
+            font-size: 5rem;
+        }
+        
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 200px;
+      height: 40px;
+    }
+      
+      img {
+          background-color: #ffc600;
+          padding: 10px;
+          filter: blur(0px);
+          border-radius: 0px;
+      }
+  </style>
+    
+</head>
+<body>
+
+ 
+ 
+  <h1>A Simple Photo Editor 🎨</h1>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="0" data-sizing="px"><br />
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+    
+    <label for="radius">Border Radius:</label>
+    <input id="radius" type="range" name="radius" min="0" max="100" value="0" data-sizing="px"><br />
+    
+    <label for="fileInput">Upload your image 👉</label>
+    <input type="file" id="fileInput" accept="image/gif, image/jpeg, image/png"/ >
+  </div>
+
+  <img id="image" src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+
+  
+
+  
+
+  <script>
+      var img = document.querySelector("img");
+      var spacing = document.querySelector("#spacing");
+      var blur = document.querySelector("#blur");
+      var baseColor = document.querySelector("#base");
+      var radius = document.querySelector("#radius");
+      var title = document.querySelector("h1");
+      
+      
+      spacing.addEventListener("change", function(e) {
+//          console.log(e.target.value);
+          img.style.padding = e.target.value + 'px';
+          
+      })
+      
+      blur.addEventListener("change", function(e) {
+//          console.log(e.target.value);
+          img.style.filter = `blur(${e.target.value}px)`;
+      })
+      
+      baseColor.addEventListener("change", function(e) {
+//          console.log(e.target.value);
+          img.style.backgroundColor = e.target.value;
+          title.style.color = e.target.value;
+          
+      })
+      
+      radius.addEventListener("change", function(e) {
+//          console.log(e.target.value);
+          img.style.borderRadius = e.target.value + 'px';
+      })
+  </script>
+  
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+      
+      $("#fileInput").change(function(){
+
+  readURL(this);
+
+});
+      
+      function readURL(input){
+
+  if(input.files && input.files[0]){
+
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+
+       $("#image").attr('src', e.target.result);
+
+    }
+
+    reader.readAsDataURL(input.files[0]);
+
+  }
+
+}
+      
+    </script>
+
+</body>
+</html>
